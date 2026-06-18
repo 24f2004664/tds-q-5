@@ -64,8 +64,7 @@ def root():
 
 
 @app.post("/code-interpreter")
-def code_interpreter(req: CodeRequest):
-
+async def code_interpreter(req: CodeRequest):
     result = execute_python(req.code)
 
     if result["success"]:
@@ -75,8 +74,6 @@ def code_interpreter(req: CodeRequest):
         }
 
     return {
-        "error": extract_error_lines(
-            result["output"]
-        ),
+        "error": extract_error_lines(result["output"]),
         "result": result["output"]
     }
